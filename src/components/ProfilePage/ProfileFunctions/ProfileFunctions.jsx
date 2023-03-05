@@ -3,6 +3,7 @@ import { Routes, Route } from "react-router-dom";
 import Card from "react-bootstrap/Card";
 import NavBar from "./NavBar/NavBar";
 import WhiteList from "./WhiteList/WhiteList";
+import Allowance from "./Allowance/Allowance";
 
 function ProfileFunctions() {
 	return (
@@ -13,6 +14,7 @@ function ProfileFunctions() {
 			<Card.Body>
 				<Routes>
 					<Route path={"/white"} element={<WhiteList />} />
+					<Route path={"/allowance"} element={<Allowance />} />
 				</Routes>
 			</Card.Body>
 		</Card>

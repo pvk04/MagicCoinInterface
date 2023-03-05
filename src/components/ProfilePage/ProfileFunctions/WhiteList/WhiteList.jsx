@@ -27,6 +27,7 @@ function WhiteList() {
 								)
 						);
 					} else {
+						dispatch({ type: "SET_ACTIVITY" });
 						alert("Заявка успешно подана!");
 					}
 				});
@@ -39,7 +40,7 @@ function WhiteList() {
 		<Form noValidate validated={validated} onSubmit={(e) => sendRequest(e)}>
 			<Form.Group>
 				<Form.Label>
-					Подать запрос на добавление в белый лист
+					<strong>Подать запрос на добавление в белый лист </strong>
 				</Form.Label>
 				<InputGroup hasValidation className="mb-3">
 					<Form.Control
