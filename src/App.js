@@ -4,9 +4,10 @@ import abi from "./abi.js";
 import { AppContext } from "./contexts/context";
 import { useNavigate, Route, Routes } from "react-router-dom";
 import ModalAuth from "./components/ModalAuth/ModalAuth.jsx";
+import ProfilePage from "./components/ProfilePage/ProfilePage.jsx";
 
 function App() {
-	const [state, dispatch] = useContext(AppContext);
+	const [{ login, activity }, dispatch] = useContext(AppContext);
 	const navigate = useNavigate();
 
 	useEffect(() => {
@@ -16,7 +17,7 @@ function App() {
 			);
 			let contract = new web3.eth.Contract(
 				abi,
-				"0x99F0219A8902b2Cc091cF8c76ebC11faB688c6e3"
+				"0xddCADf28bd39Cf2DE6EE84AFe1cC123cdeF124b7"
 			);
 
 			dispatch({ type: "SET_WEB3", payload: web3 });
@@ -25,10 +26,20 @@ function App() {
 		connect();
 	}, []);
 
+	useEffect(() => {
+		function logout() {
+			if (!login) {
+				navigate("/");
+			}
+		}
+		logout();
+	}, [login, activity]);
+
 	return (
 		<div className="App">
 			<Routes>
 				<Route path="/" element={<ModalAuth />} />
+				<Route path="/profile/*" element={<ProfilePage />} />
 			</Routes>
 		</div>
 	);

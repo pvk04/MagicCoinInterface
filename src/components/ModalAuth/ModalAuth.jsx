@@ -20,13 +20,13 @@ function ModalAuth() {
 				.auth(adr, codePass)
 				.call({ from: adr, gasLimit: "6721975" });
 			if (response) {
-				navigate("/profile");
 				dispatch({ type: "SET_ADDRESS", payload: adr });
 				dispatch({
 					type: "SET_ROLE",
 					payload: await contract.methods.returnUserRole(adr).call(),
 				});
 				dispatch({ type: "SET_LOGIN" });
+				navigate("/profile ");
 			} else {
 				alert("Неправильные данные для входа.");
 			}
