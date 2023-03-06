@@ -4,6 +4,7 @@ import Card from "react-bootstrap/Card";
 import NavBar from "./NavBar/NavBar";
 import WhiteList from "./WhiteList/WhiteList";
 import Allowance from "./Allowance/Allowance";
+import Transfer from "./Transfer/Transfer";
 
 function ProfileFunctions() {
 	return (
@@ -15,6 +16,7 @@ function ProfileFunctions() {
 				<Routes>
 					<Route path={"/white"} element={<WhiteList />} />
 					<Route path={"/allowance"} element={<Allowance />} />
+					<Route path={"/transfer"} element={<Transfer />} />
 				</Routes>
 			</Card.Body>
 		</Card>

@@ -6,30 +6,67 @@ import { AppContext } from "../../../contexts/context";
 function ProfileHeader() {
 	const [{ web3, contract, address, role, activity }, dispatch] =
 		useContext(AppContext);
+
 	const [eth, setEth] = useState("");
 	const [cmon, setCmon] = useState("");
-	// const [seconds, setSec] = useState();
-	// const [time, setTime] = useState("");
+
+	const [seconds, setSeconds] = useState(null);
+	const [minutes, setMinutes] = useState(null);
+	const [hours, setHours] = useState(null);
 
 	useEffect(() => {
 		async function getInfo() {
 			let balanceETH = await web3.eth.getBalance(address);
 			let balanceCMON = await contract.methods.balanceOf(address).call();
-			// let timeLive = Number(
-			// 	await contract.methods.returnSystemTime().call()
-			// );
-			// setSec(timeLive);
-
-			// const interval = setInterval(() => {
-			// 	setSec(seconds + 1);
-			// 	setTime(new Date(seconds * 1000).toISOString().slice(11, 19));
-			// }, 1000);
+			let timeLive = await contract.methods
+				.returnSystemTime()
+				.call()
+				.then();
+			setSeconds(
+				Number(
+					new Date(Number(timeLive) * 1000)
+						.toISOString()
+						.slice(17, 19)
+				)
+			);
+			setMinutes(
+				Number(
+					new Date(Number(timeLive) * 1000)
+						.toISOString()
+						.slice(14, 16)
+				)
+			);
+			setHours(
+				Number(
+					new Date(Number(timeLive) * 1000)
+						.toISOString()
+						.slice(11, 13)
+				)
+			);
 
 			setEth(web3.utils.fromWei(balanceETH, "ether"));
 			setCmon(balanceCMON / 10 ** 12);
 		}
 		getInfo();
 	}, [activity]);
+
+	useEffect(() => {
+		const interval = setInterval(() => {
+			if (seconds != null) {
+				setSeconds((seconds) => seconds + 1);
+				if (seconds == 59) {
+					setMinutes((minutes) => minutes + 1);
+					setSeconds(() => 0);
+				}
+				if (minutes == 59) {
+					setHours((hours) => hours + 1);
+					setMinutes(() => 0);
+				}
+			}
+		}, 1000);
+
+		return () => clearInterval(interval);
+	});
 
 	function logout() {
 		dispatch({ type: "SET_LOGOUT" });
@@ -59,7 +96,14 @@ function ProfileHeader() {
 				</Card.Text>
 				<Card.Text>Баланс ETH: {eth}</Card.Text>
 				<Card.Text>Баланс CMON: {cmon}</Card.Text>
-				<Card.Text>Время жизни: {}</Card.Text>
+				<Card.Text>
+					Время жизни:{" "}
+					{(hours < 10 ? "0" + hours : hours) +
+						":" +
+						(minutes < 10 ? "0" + minutes : minutes) +
+						":" +
+						(seconds < 10 ? "0" + seconds : seconds)}
+				</Card.Text>
 				<Card.Text>Длительность Private фазы: {}</Card.Text>
 				<Card.Text>Время с момента начала Public фазы: {}</Card.Text>
 			</Card.Body>

@@ -21,10 +21,10 @@ function NavBar() {
 		<Navbar collapseOnSelect>
 			<Container>
 				<Nav>
-					{functions.map((elem) => {
+					{functions.map((elem, index) => {
 						if (elem.permission.includes(role)) {
 							return (
-								<Nav.Link as={Link} to={elem.href}>
+								<Nav.Link key={index} as={Link} to={elem.href}>
 									{elem.name}
 								</Nav.Link>
 							);

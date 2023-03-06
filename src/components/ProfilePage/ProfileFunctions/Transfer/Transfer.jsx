@@ -4,7 +4,7 @@ import Form from "react-bootstrap/Form";
 import InputGroup from "react-bootstrap/InputGroup";
 import { AppContext } from "../../../../contexts/context";
 
-function Allowance() {
+function Transfer() {
 	const [{ contract, address, activity }, dispatch] = useContext(AppContext);
 	const [amount, setAmount] = useState(1);
 	const [accounts, setAccounts] = useState([]);
@@ -20,13 +20,13 @@ function Allowance() {
 		getData();
 	}, [activity]);
 
-	async function giveAllowance(e) {
+	async function transfer(e) {
 		e.preventDefault();
 		e.stopPropagation();
 		const form = e.currentTarget;
 		if (form.checkValidity() && amount >= 0.000000000001) {
-			let response = await contract.methods
-				.approve(selected, (amount * 10 ** 12).toString())
+			const response = await contract.methods
+				.transfer(selected, (amount * 10 ** 12).toString())
 				.send({ from: address, gasLimit: "6721975" }, (err) => {
 					if (err) {
 						alert(
@@ -39,7 +39,7 @@ function Allowance() {
 						);
 					} else {
 						dispatch({ type: "SET_ACTIVITY" });
-						alert("Успешно!");
+						alert("Перевод успешно совершен!");
 						setAmount(0);
 						setSelected(accounts[0]);
 					}
@@ -53,12 +53,12 @@ function Allowance() {
 			noValidate
 			validated={validated}
 			onSubmit={(e) => {
-				giveAllowance(e);
+				transfer(e);
 			}}
 		>
 			<Form.Group>
 				<Form.Label>
-					<strong>Дать токены в распоряжение</strong>
+					<strong>Перевести токены</strong>
 				</Form.Label>
 				<Form.Select
 					value={selected}
@@ -84,18 +84,16 @@ function Allowance() {
 						onChange={(e) => setAmount(e.target.value)}
 						step={0.000000000001}
 						min={0.000000000001}
-						max={10000000}
 					/>
 					<Button
 						variant="outline-secondary"
 						id="button-addon2"
 						type="submit"
 					>
-						Дать разрешение
+						Перевести
 					</Button>
 					<Form.Control.Feedback type="invalid">
-						Введите количество токенов, которые хотите дать в
-						распоряжение
+						Введите количество токенов, которые хотите перевести
 					</Form.Control.Feedback>
 				</InputGroup>
 			</Form.Group>
@@ -103,4 +101,4 @@ function Allowance() {
 	);
 }
 
-export default Allowance;
+export default Transfer;

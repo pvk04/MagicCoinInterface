@@ -29,6 +29,7 @@ function WhiteList() {
 					} else {
 						dispatch({ type: "SET_ACTIVITY" });
 						alert("Заявка успешно подана!");
+						setName("");
 					}
 				});
 			console.log(response);
