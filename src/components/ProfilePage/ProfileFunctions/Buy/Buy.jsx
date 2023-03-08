@@ -19,7 +19,7 @@ function Buy() {
 				.buyTokens((amount * 10 ** 12).toString())
 				.send(
 					{
-						value: (rate * 10 ** 12).toString(), // курс, переведенный в эфиры
+						value: (amount * rate * 10 ** 12).toString(), // курс, переведенный в эфиры
 						from: address,
 						gasLimit: "6721975",
 					},

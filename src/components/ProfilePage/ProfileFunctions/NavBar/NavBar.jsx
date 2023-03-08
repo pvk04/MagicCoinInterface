@@ -8,7 +8,6 @@ import { Link } from "react-router-dom";
 const functions = [
 	{ name: "Перевести", href: "transfer", permission: "0123" },
 	{ name: "Белый лист", href: "white", permission: "0123" },
-	{ name: "Заявки", href: "requests", permission: "1" },
 	{ name: "Дать разрешение", href: "allowance", permission: "0123" },
 	{ name: "Купить токены", href: "buy", permission: "0123" },
 	{ name: "Активы пользователей", href: "info", permission: "012" },
@@ -17,20 +16,22 @@ const functions = [
 function NavBar() {
 	const [{ role }] = useContext(AppContext);
 	return (
-		<Navbar collapseOnSelect>
-			<Container>
-				<Nav>
-					{functions.map((elem, index) => {
-						if (elem.permission.includes(role)) {
-							return (
-								<Nav.Link key={index} as={Link} to={elem.href}>
-									{elem.name}
-								</Nav.Link>
-							);
-						}
-					})}
-				</Nav>
-			</Container>
+		<Navbar
+			collapseOnSelect
+			style={{ paddingLeft: "16px", paddingRight: "16px" }}
+		>
+			<Navbar.Toggle aria-controls="responsive-navbar-nav" />
+			<Nav>
+				{functions.map((elem, index) => {
+					if (elem.permission.includes(role)) {
+						return (
+							<Nav.Link key={index} as={Link} to={elem.href}>
+								{elem.name}
+							</Nav.Link>
+						);
+					}
+				})}
+			</Nav>
 		</Navbar>
 	);
 }
