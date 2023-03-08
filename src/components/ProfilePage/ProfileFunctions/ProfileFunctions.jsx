@@ -5,6 +5,7 @@ import NavBar from "./NavBar/NavBar";
 import WhiteList from "./WhiteList/WhiteList";
 import Allowance from "./Allowance/Allowance";
 import Transfer from "./Transfer/Transfer";
+import Buy from "./Buy/Buy";
 
 function ProfileFunctions() {
 	return (
@@ -17,6 +18,7 @@ function ProfileFunctions() {
 					<Route path={"/white"} element={<WhiteList />} />
 					<Route path={"/allowance"} element={<Allowance />} />
 					<Route path={"/transfer"} element={<Transfer />} />
+					<Route path={"/buy"} element={<Buy />} />
 				</Routes>
 			</Card.Body>
 		</Card>

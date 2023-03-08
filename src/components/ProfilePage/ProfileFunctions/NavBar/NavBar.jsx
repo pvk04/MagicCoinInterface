@@ -10,8 +10,7 @@ const functions = [
 	{ name: "Белый лист", href: "white", permission: "0123" },
 	{ name: "Заявки", href: "requests", permission: "1" },
 	{ name: "Дать разрешение", href: "allowance", permission: "0123" },
-	{ name: "Купить private", href: "private", permission: "0123" },
-	{ name: "Купить public", href: "public", permission: "0123" },
+	{ name: "Купить токены", href: "buy", permission: "0123" },
 	{ name: "Активы пользователей", href: "info", permission: "012" },
 ];
 

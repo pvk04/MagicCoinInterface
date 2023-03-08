@@ -17,7 +17,7 @@ function App() {
 			);
 			let contract = new web3.eth.Contract(
 				abi,
-				"0x18FF8ac7A8A050d5937cD1F02c1beE448c18A9ff"
+				"0x98268faD242090f95854D4E39B586FD6381342E7"
 			);
 
 			dispatch({ type: "SET_WEB3", payload: web3 });
@@ -36,7 +36,7 @@ function App() {
 	}, [login, activity]);
 
 	return (
-		<div className="App">
+		<div className="App" style={{ width: "85%", margin: "auto" }}>
 			<Routes>
 				<Route path="/" element={<ModalAuth />} />
 				<Route path="/profile/*" element={<ProfilePage />} />
