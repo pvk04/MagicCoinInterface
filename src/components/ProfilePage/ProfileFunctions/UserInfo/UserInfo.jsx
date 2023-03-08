@@ -18,9 +18,10 @@ function UserInfo() {
 			const data = await contract.methods.returnAllUsers().call();
 			setSelected(data[0]);
 			setAccounts(data);
+			showInfo(data[0]);
 		}
 		getData();
-	}, [activity]);
+	}, [address, activity]);
 
 	async function showInfo(adr) {
 		const balance = await contract.methods.balanceOf(adr).call();
@@ -28,8 +29,7 @@ function UserInfo() {
 			.returnPublicBalance(adr)
 			.call();
 		const privateBalance = (balance - publicBalance) / 10 ** 12;
-        publicBalance = publicBalance / 10 ** 12;
-        console.log({ publicBalance, privateBalance });
+		publicBalance = publicBalance / 10 ** 12;
 		setInfo({ publicBalance, privateBalance });
 	}
 
@@ -41,7 +41,7 @@ function UserInfo() {
 			<Form.Select
 				value={selected}
 				onChange={(e) => {
-                    setSelected(e.target.value);
+					setSelected(e.target.value);
 					showInfo(e.target.value);
 				}}
 			>
@@ -54,8 +54,24 @@ function UserInfo() {
 			<Card>
 				<Card.Header>{selected}</Card.Header>
 				<Card.Body>
-					<Card.Text>Public баланс: {publicBalance} CMON</Card.Text>
-					<Card.Text>Private баланс: {privateBalance} CMON</Card.Text>
+					<Card.Text
+						styles={
+							role == 0 || role == 2
+								? { display: "flex" }
+								: { display: "none" }
+						}
+					>
+						Public баланс: {publicBalance} CMON
+					</Card.Text>
+					<Card.Text
+						styles={
+							role == 0 || role == 1
+								? { display: "flex" }
+								: { display: "none" }
+						}
+					>
+						Private баланс: {privateBalance} CMON
+					</Card.Text>
 				</Card.Body>
 			</Card>
 		</Form>
