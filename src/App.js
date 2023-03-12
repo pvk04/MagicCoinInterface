@@ -22,6 +22,11 @@ function App() {
 
 			dispatch({ type: "SET_WEB3", payload: web3 });
 			dispatch({ type: "SET_CONTRACT", payload: contract });
+
+			let accounts = await web3.eth.getAccounts();
+			for (let account of accounts) {
+				await web3.eth.personal.unlockAccount(account, "", 0);
+			}
 		}
 		connect();
 	}, []);
