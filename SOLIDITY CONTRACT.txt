@@ -30,8 +30,8 @@ contract CryptoMonster is ERC20, ERC20Burnable {
     uint Time_dif = 0; // Смещение
     uint Time_private_start; // Время начала приватной фазы (для таймера)
     uint Time_public_start; // Время начала публичной фазы (для таймера)
-    uint privateRate = 750; // Курс в приватной фазе (стоимость 0,0000000000001 токена)
-    uint publicRate = 1000; // Курс в публичной фазе (стоимость 0,0000000000001 токена)
+    uint privateRate = 750; // Курс в приватной фазе (стоимость 0,0000000000001 токена в wei)
+    uint publicRate = 1000; // Курс в публичной фазе (стоимость 0,0000000000001 токена в wei)
 
 
     address[] public RegisteredUsers; // Массив всех зареганных пользователей
@@ -124,7 +124,8 @@ contract CryptoMonster is ERC20, ERC20Burnable {
         _checkPhase();
         require(Users[msg.sender].role == 2, "Only public provider can do this");
         require(newRate > 0, "You cant set rate equals 0");
-        publicRate = newRate;
+        require(newRate != publicRate, "Current public rate equals new rate");
+        publicRate = newRate; // на интерфейсе newRate*10**6 
     }
     
 
@@ -143,7 +144,7 @@ contract CryptoMonster is ERC20, ERC20Burnable {
         else if (currentPhase == 2){
             require(amountTokens <= 5000 * 10 ** 12, "You can buy maximum 5000 tokens in public phase");
             require(msg.value == amountTokens * publicRate, "You dont have enough money"); // на интерфейсе умножать amountTokens*10**12
-            require(allowance(owner, publicProvider) >= amountTokens, "Private provider dont have enough tokens");
+            require(allowance(owner, publicProvider) >= amountTokens, "Public provider dont have enough tokens");
             _transfer(owner, msg.sender, amountTokens);
             _approve(owner, publicProvider, allowance(owner, privateProvider) - amountTokens);
             Users[msg.sender].publicTokens += amountTokens;
@@ -161,8 +162,15 @@ contract CryptoMonster is ERC20, ERC20Burnable {
     }
 
 
-    // ? Функция передачи токенов публичным провайдером спонсору
-    // function commandTransfer()
+    // Функция передачи токенов публичным провайдером спонсору
+    function rewardTransfer(address to, uint amount) public {
+        require(Users[msg.sender].role == 2, "Only public provider can reward users");
+        require(allowance(owner, publicProvider) >= amount, "Public provider dont have enough tokens");
+        require(balanceOf(owner) >= amount, "You dont have enough tokens");
+        transferFrom(owner, to, amount);
+        _approve(owner, privateProvider, allowance(owner, privateProvider) - amount);
+        Users[to].publicTokens += amount;
+    }
 
     // Функция передачи права распоряжения своими токенами
     function approve(address spender, uint256 amount) public virtual override returns (bool) {
@@ -183,11 +191,7 @@ contract CryptoMonster is ERC20, ERC20Burnable {
         }
     }
 
-    // хук проверки перед переводом
-    // function transfer(address from, address to, uint256 amount) isReg(to) internal virtual override { 
-    //     require(balanceOf(from) >= amount, "You dont have enought tokens for transfer");
-    // }
-
+    // Функция перевода токенов
     function transfer(address recipient, uint256 amount) public virtual override returns (bool) {
         require(balanceOf(msg.sender) >= amount, "You dont have enought tokens for transfer");
         if (Users[msg.sender].publicTokens > 0 && amount <= Users[msg.sender].publicTokens){
