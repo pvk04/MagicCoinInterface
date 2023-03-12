@@ -48,30 +48,30 @@ contract CryptoMonster is ERC20, ERC20Burnable {
 
         _mint(msg.sender, 10000000 * 10**12 );
        
-        privateProvider = 0x67AFa00e74cDecc2F29bEabB6FA857Ea1676342F;
-        registration(0x67AFa00e74cDecc2F29bEabB6FA857Ea1676342F, 0x64e604787cbf194841e7b68d7cd28786f6c9a0a3ab9f8b0a0e87cb4387ab0107); // private 123
-        Users[0x67AFa00e74cDecc2F29bEabB6FA857Ea1676342F].role = 1;
-        approve(0x67AFa00e74cDecc2F29bEabB6FA857Ea1676342F, balanceOf(msg.sender) / 100 * 30);
+        privateProvider = 0xD4A048DdED7905397924beA22fb2245180323cCD;
+        registration(0xD4A048DdED7905397924beA22fb2245180323cCD, 0x64e604787cbf194841e7b68d7cd28786f6c9a0a3ab9f8b0a0e87cb4387ab0107); // private 123
+        Users[0xD4A048DdED7905397924beA22fb2245180323cCD].role = 1;
+        approve(0xD4A048DdED7905397924beA22fb2245180323cCD, balanceOf(msg.sender) / 100 * 30);
 
-        publicProvider = 0x266c1a173ba0525A6554f01c0502eF13aDd0fB11;
-        registration(0x266c1a173ba0525A6554f01c0502eF13aDd0fB11, 0x64e604787cbf194841e7b68d7cd28786f6c9a0a3ab9f8b0a0e87cb4387ab0107); // public 123
-        Users[0x266c1a173ba0525A6554f01c0502eF13aDd0fB11].role = 2;
-        approve(0x266c1a173ba0525A6554f01c0502eF13aDd0fB11, balanceOf(msg.sender) / 100 * 60);
+        publicProvider = 0xa83B6Ff982f222AA7Efb5f3029690fb07860D382;
+        registration(0xa83B6Ff982f222AA7Efb5f3029690fb07860D382, 0x64e604787cbf194841e7b68d7cd28786f6c9a0a3ab9f8b0a0e87cb4387ab0107); // public 123
+        Users[0xa83B6Ff982f222AA7Efb5f3029690fb07860D382].role = 2;
+        approve(0xa83B6Ff982f222AA7Efb5f3029690fb07860D382, balanceOf(msg.sender) / 100 * 60);
 
         // investor1
-        registration(0xfeF2BB904e72725647752F7586AB3E6B011F52c7, 0x64e604787cbf194841e7b68d7cd28786f6c9a0a3ab9f8b0a0e87cb4387ab0107);
-        Users[0xfeF2BB904e72725647752F7586AB3E6B011F52c7].role = 3;
-        transfer(0xfeF2BB904e72725647752F7586AB3E6B011F52c7, 300000*10**12);
+        registration(0x420Ac7B93C2d2952DB42d3374BFDDFcD63C27c99, 0x64e604787cbf194841e7b68d7cd28786f6c9a0a3ab9f8b0a0e87cb4387ab0107);
+        Users[0x420Ac7B93C2d2952DB42d3374BFDDFcD63C27c99].role = 3;
+        transfer(0x420Ac7B93C2d2952DB42d3374BFDDFcD63C27c99, 300000*10**12);
 
         // investor2
-        registration(0x3cE2dFaeb7d02100b2d90D9310c9D572F4B64eF6, 0x64e604787cbf194841e7b68d7cd28786f6c9a0a3ab9f8b0a0e87cb4387ab0107);
-        Users[0x3cE2dFaeb7d02100b2d90D9310c9D572F4B64eF6].role = 3;
-        transfer(0x3cE2dFaeb7d02100b2d90D9310c9D572F4B64eF6, 400000*10**12);
+        registration(0xA7d84Cc386f34333E781E4c6a32949a3D03baaeb, 0x64e604787cbf194841e7b68d7cd28786f6c9a0a3ab9f8b0a0e87cb4387ab0107);
+        Users[0xA7d84Cc386f34333E781E4c6a32949a3D03baaeb].role = 3;
+        transfer(0xA7d84Cc386f34333E781E4c6a32949a3D03baaeb, 400000*10**12);
 
         // best friend
-        registration(0x282c534C7E8f4E37d37d722b29226D6205088EA3, 0x64e604787cbf194841e7b68d7cd28786f6c9a0a3ab9f8b0a0e87cb4387ab0107);
-        Users[0x282c534C7E8f4E37d37d722b29226D6205088EA3].role = 3;
-        transfer(0x282c534C7E8f4E37d37d722b29226D6205088EA3, 200000*10**12);
+        registration(0x2cF68c160981036e835570F83834Bd7D559Eb4E2, 0x64e604787cbf194841e7b68d7cd28786f6c9a0a3ab9f8b0a0e87cb4387ab0107);
+        Users[0x2cF68c160981036e835570F83834Bd7D559Eb4E2].role = 3;
+        transfer(0x2cF68c160981036e835570F83834Bd7D559Eb4E2, 200000*10**12);
     }
 
     // Проверка, что пользователь уже зарегистрирован
