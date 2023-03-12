@@ -7,6 +7,7 @@ import Allowance from "./Allowance/Allowance";
 import Transfer from "./Transfer/Transfer";
 import Buy from "./Buy/Buy";
 import UserInfo from "./UserInfo/UserInfo";
+import ChangeRate from "./ChangeRate/ChangeRate";
 
 function ProfileFunctions() {
 	return (
@@ -16,11 +17,12 @@ function ProfileFunctions() {
 			</Card.Header>
 			<Card.Body>
 				<Routes>
-					<Route path={"/white"} element={<WhiteList />} />
-					<Route path={"/allowance"} element={<Allowance />} />
-					<Route path={"/transfer"} element={<Transfer />} />
-					<Route path={"/buy"} element={<Buy />} />
-					<Route path={"info"} element={<UserInfo />} />
+					<Route path="/white" element={<WhiteList />} />
+					<Route path="/allowance" element={<Allowance />} />
+					<Route path="/transfer" element={<Transfer />} />
+					<Route path="/buy" element={<Buy />} />
+					<Route path="info" element={<UserInfo />} />
+					<Route path="rate" element={<ChangeRate />} />
 				</Routes>
 			</Card.Body>
 		</Card>
