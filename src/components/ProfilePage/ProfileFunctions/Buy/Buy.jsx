@@ -67,7 +67,7 @@ function Buy() {
 						min={0.000000000001}
 					/>
 					<Button
-						variant="outline-secondary"
+						variant="primary"
 						id="button-addon2"
 						type="submit"
 					>

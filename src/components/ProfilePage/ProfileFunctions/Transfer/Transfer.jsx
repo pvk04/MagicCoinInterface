@@ -5,7 +5,7 @@ import InputGroup from "react-bootstrap/InputGroup";
 import { AppContext } from "../../../../contexts/context";
 
 function Transfer() {
-	const [{ contract, address, activity }, dispatch] = useContext(AppContext);
+	const [{ contract, address, role, activity }, dispatch] = useContext(AppContext);
 	const [amount, setAmount] = useState(1);
 	const [accounts, setAccounts] = useState([]);
 	const [selected, setSelected] = useState(accounts[0]);
@@ -20,30 +20,52 @@ function Transfer() {
 		getData();
 	}, [activity]);
 
-	async function transfer(e) {
+	async function transfer(e, type = 1) {
 		e.preventDefault();
 		e.stopPropagation();
 		const form = e.currentTarget;
 		if (form.checkValidity() && amount >= 0.000000000001) {
-			const response = await contract.methods
-				.transfer(selected, (amount * 10 ** 12).toString())
-				.send({ from: address, gasLimit: "6721975" }, (err) => {
-					if (err) {
-						alert(
-							err
-								.toString()
-								.replace(
-									"Error: Returned error: VM Exception while processing transaction: revert ",
-									""
-								)
-						);
-					} else {
-						dispatch({ type: "SET_ACTIVITY" });
-						alert("Перевод успешно совершен!");
-						setAmount(0);
-						setSelected(accounts[0]);
-					}
-				});
+			if (type === 1) {
+				await contract.methods
+					.transfer(selected, (amount * 10 ** 12).toString())
+					.send({ from: address, gasLimit: "6721975" }, (err) => {
+						if (err) {
+							alert(
+								err
+									.toString()
+									.replace(
+										"Error: Returned error: VM Exception while processing transaction: revert ",
+										""
+									)
+							);
+						} else {
+							dispatch({ type: "SET_ACTIVITY" });
+							alert("Перевод успешно совершен!");
+							setAmount(0);
+							setSelected(accounts[0]);
+						}
+					});
+			} else if (type === 2) {
+				await contract.methods
+					.rewardTransfer(selected, amount * 10 ** 12)
+					.send({ from: address, gasLimit: "6721975" }, (err) => {
+						if (err) {
+							alert(
+								err
+									.toString()
+									.replace(
+										"Error: Returned error: VM Exception while processing transaction: revert ",
+										""
+									)
+							);
+						} else {
+							dispatch({ type: "SET_ACTIVITY" });
+							alert("Пользователь успешно награжден!");
+							setAmount(0);
+							setSelected(accounts[0]);
+						}
+					});
+			}
 		}
 		setValidated(true);
 	}
@@ -85,11 +107,15 @@ function Transfer() {
 						step={0.000000000001}
 						min={0.000000000001}
 					/>
-					<Button
+					{role == 2 ? <Button
 						variant="outline-secondary"
-						id="button-addon2"
-						type="submit"
+						onClick={(e) => {
+							transfer(e, 2);
+						}}
 					>
+						Наградить
+					</Button> : ''}
+					<Button variant="primary" id="button-addon2" type="submit">
 						Перевести
 					</Button>
 					<Form.Control.Feedback type="invalid">

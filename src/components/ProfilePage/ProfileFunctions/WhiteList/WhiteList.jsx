@@ -115,7 +115,7 @@ function WhiteList() {
 							onChange={(e) => setName(e.target.value)}
 						/>
 						<Button
-							variant="outline-secondary"
+							variant="primary"
 							id="button-addon2"
 							type="submit"
 						>

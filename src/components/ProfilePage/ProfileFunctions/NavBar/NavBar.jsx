@@ -11,6 +11,7 @@ const functions = [
 	{ name: "Дать разрешение", href: "allowance", permission: "0123" },
 	{ name: "Купить токены", href: "buy", permission: "0123" },
 	{ name: "Активы пользователей", href: "info", permission: "012" },
+	{ name: "Изменить курс", href: "rate", permission: "2" },
 ];
 
 function NavBar() {

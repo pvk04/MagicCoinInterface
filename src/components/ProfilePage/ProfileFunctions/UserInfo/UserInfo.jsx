@@ -54,24 +54,20 @@ function UserInfo() {
 			<Card>
 				<Card.Header>{selected}</Card.Header>
 				<Card.Body>
-					<Card.Text
-						styles={
-							role == 0 || role == 2
-								? { display: "flex" }
-								: { display: "none" }
-						}
-					>
-						Public баланс: {publicBalance} CMON
-					</Card.Text>
-					<Card.Text
-						styles={
-							role == 0 || role == 1
-								? { display: "flex" }
-								: { display: "none" }
-						}
-					>
-						Private баланс: {privateBalance} CMON
-					</Card.Text>
+					{role == 0 || role == 2 ? (
+						<Card.Text>
+							Public баланс: {publicBalance} CMON
+						</Card.Text>
+					) : (
+						console.log(role)
+					)}
+					{role == 0 || role == 1 ? (
+						<Card.Text>
+							Private баланс: {privateBalance} CMON
+						</Card.Text>
+					) : (
+						""
+					)}
 				</Card.Body>
 			</Card>
 		</Form>

@@ -87,7 +87,7 @@ function Allowance() {
 						max={10000000}
 					/>
 					<Button
-						variant="outline-secondary"
+						variant="primary"
 						id="button-addon2"
 						type="submit"
 					>
